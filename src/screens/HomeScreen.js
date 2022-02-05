@@ -32,7 +32,7 @@ const HomeScreen = ({ navigation }) => {
         let renderFlag = 0
         while (contactList.length < 10) {
             if (renderFlag > 20) {
-                onError("to many renders")
+                onError("too many renders")
                 break
             }
             try {

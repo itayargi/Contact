@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { View, ImageBackground, StyleSheet, Image } from "react-native";
+import { View, ImageBackground, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Colors from "../utils/Colors";
 import AppContext from "../context/AppContext";
@@ -9,7 +9,7 @@ import { wait } from "../utils/functionUtils";
 import Loader from "../components/Loader";
 export default function Splash({ navigation }) {
 
-  const {updateUserStateOnStart} = useContext(AppContext)
+  const { updateUserStateOnStart } = useContext(AppContext)
 
   const navigateToHomeScreen = () => {
     navigation.reset({
@@ -20,7 +20,7 @@ export default function Splash({ navigation }) {
   const navigateToOnboarding = () => {
     navigation.reset({
       index: 0,
-      routes: [{ name: screensName.Onboarding}],
+      routes: [{ name: screensName.Onboarding }],
     });
   };
 
@@ -31,21 +31,15 @@ export default function Splash({ navigation }) {
           return JSON.parse(res);
         } else {
           console.log("no user in storage");
-          wait(2000).then(() => navigateToOnboarding());
         }
       })
       .then((resJson) => {
-        if (resJson) {
-          console.log("splashUser on loading: ", resJson);
-          if (resJson.finishOnboarding) {
-            updateUserStateOnStart(resJson);
-            wait(2000).then(() => navigateToHomeScreen());
-          } else {
-            updateUserStateOnStart(resJson);
-            wait(2000).then(() => navigateToOnboarding());
-          }
+        console.log("splashUser on loading: ", resJson);
+        if (resJson?.finishOnboarding) {
+          updateUserStateOnStart(resJson);
+          wait(2000).then(() => navigateToHomeScreen());
         } else {
-          console.log("navigate to onboarding");
+          updateUserStateOnStart(resJson);
           wait(2000).then(() => navigateToOnboarding());
         }
       });
@@ -62,7 +56,7 @@ export default function Splash({ navigation }) {
         source={imageIndex.splash_background()}
       >
         <View style={styles.picView}>
-        <Loader />
+          <Loader />
         </View>
       </ImageBackground>
     </View>
@@ -77,7 +71,7 @@ const styles = StyleSheet.create({
   },
   logoPic: {
     marginTop: 0,
-    tintColor:Colors.colorWhite,
+    tintColor: Colors.colorWhite,
     width: 110,
     height: 110,
     paddingTop: 0,

@@ -3,7 +3,6 @@ import React from 'react';
 import Colors from '../utils/Colors';
 import sizes from '../utils/sizes';
 import strings from '../utils/strings';
-import Loader from '../components/Loader';
 
 const ContactDetails = ({ navigation, route }) => {
     const { contact } = route.params;
